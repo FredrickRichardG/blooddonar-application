@@ -15,5 +15,31 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+
+  staging-db:
+    image: mysql:8.0
+    container_name: mysql_staging
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: blooddonordb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3307:3306"
+    volumes:
+      - staging_mysql_data:/var/lib/mysql
+
+  vault:
+    container_name: "blooddonar_vault"
+    image: hashicorp/vault:latest
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: "00000000-0000-0000-0000-000000000000"
+    ports:
+      - "8200:8200"
+
 volumes:
   mysql_data: {}
+  staging_mysql_data: {}
+
+

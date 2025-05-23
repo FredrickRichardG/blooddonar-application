@@ -1,6 +1,7 @@
 package com.i2i.blooddonor.repository;
 
 import com.i2i.blooddonor.model.Member;
+import com.i2i.blooddonor.model.MemberDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -16,4 +17,6 @@ public interface DonorRepository extends JpaRepository<Member,Integer> , PagingA
 
     @Query(value = "select * from member m where m.bloodgroup = :bloodGroup",nativeQuery = true)
     List<Member> findSpecificBloodGroup(@Param("bloodGroup") String bloodgroup);
+
+
 }

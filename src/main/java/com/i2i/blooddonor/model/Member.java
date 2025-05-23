@@ -1,13 +1,12 @@
 package com.i2i.blooddonor.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 import java.sql.Date;
-import java.sql.Timestamp;
+
 
 @Entity
 @Getter
@@ -24,5 +23,10 @@ public class Member extends Auditable<String> {
 
     @Column(name="last_donated_on")
     private Date lastDonatedOn;
+
+    @OneToOne(mappedBy="member",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private MemberDetail memberdetail;
+
 
 }

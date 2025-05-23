@@ -5,8 +5,6 @@ import com.i2i.blooddonor.model.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -25,7 +23,6 @@ public class DonorEntityManagerRepository {
         Query query= entityManager.createQuery("select m from Member m where m.lastDonatedOn < :criteriaDate and m.bloodGroup = :bloodGrp");
         query.setParameter("criteriaDate",criteriaDate);
         query.setParameter("bloodGrp",bloodGroup);
-
         return query.getResultList();
     }
 

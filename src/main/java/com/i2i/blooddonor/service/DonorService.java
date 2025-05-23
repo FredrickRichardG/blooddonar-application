@@ -15,4 +15,7 @@ public interface DonorService {
     Member updateMember(Member member);
     Page<Member> findAllMemberWithPaginator(int page, int size);
     List<Member> findEligibleMember();
+    Member findByMemberEntityId(Integer id);
+    List<Member>findEligibleMemberRegToBloodGrp(String bloodGroup);
+    List<Member>findSpecificBloodGroup(String bloodGroup);
 }

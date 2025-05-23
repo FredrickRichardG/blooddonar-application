@@ -79,5 +79,24 @@ public class DonorController {
         return new ResponseEntity<>(donorService.findEligibleMember(),HttpStatus.OK);
     }
 
+    @GetMapping("/findMemberByIdEntity")
+    public ResponseEntity<Member> findMemberByIdEntity( @RequestParam Integer id){
+        Member memberData = donorService.findByMemberEntityId(id);
+        return new ResponseEntity<>(memberData,HttpStatus.OK);
+    }
+
+    @GetMapping("/eligibleMemberRegToBloodGroup")
+    public  ResponseEntity<List<Member>> findEligibleMemberRegToBloodGrp(@RequestBody Map<String,Object> request){
+        String bloodGroup =(String) request.get("bloodGroup");
+        return new ResponseEntity<>(donorService.findEligibleMemberRegToBloodGrp(bloodGroup),HttpStatus.OK);
+    }
+
+    @GetMapping("/findSpecificBloodGroupMember")
+    public  ResponseEntity<List<Member>> findSpecificBloodGroupMember(@RequestBody Map<String,Object> request){
+        String bloodGroup =(String) request.get("bloodGroup");
+        return new ResponseEntity<>(donorService.findSpecificBloodGroup(bloodGroup),HttpStatus.OK);
+    }
+
+
 }
 

@@ -1,6 +1,7 @@
 package com.i2i.blooddonor.service;
 
 import com.i2i.blooddonor.model.Member;
+import com.i2i.blooddonor.repository.DonorEntityManagerRepository;
 import com.i2i.blooddonor.repository.DonorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -16,9 +17,12 @@ import java.util.Optional;
 public class DonorServiceImpl implements DonorService {
 
     private final DonorRepository donorRepository;
+    private final DonorEntityManagerRepository donorEntityManagerRepository;
 
-    public DonorServiceImpl(DonorRepository donorRepository) {
+
+    public DonorServiceImpl(DonorRepository donorRepository, DonorEntityManagerRepository donorEntityManagerRepository) {
         this.donorRepository = donorRepository;
+        this.donorEntityManagerRepository = donorEntityManagerRepository;
     }
 
     @Override
@@ -80,7 +84,20 @@ public class DonorServiceImpl implements DonorService {
 
     public List<Member> findEligibleMember(){
         LocalDate criteriaDate =LocalDate.now().minusDays(180);
-        System.out.println("criteria_date-----"+criteriaDate);
         return donorRepository.findEligibleUser(criteriaDate);
+    }
+
+    public Member findByMemberEntityId(Integer id){
+
+        return donorEntityManagerRepository.findById(id);
+    }
+
+    public List<Member> findEligibleMemberRegToBloodGrp(String bloodGroup){
+        LocalDate criteriaDate =LocalDate.now().minusDays(180);
+        return donorEntityManagerRepository.findEligibleUserRegToBloodGrp(criteriaDate,bloodGroup);
+    }
+
+    public List<Member>findSpecificBloodGroup(String bloodGroup){
+        return donorRepository.findSpecificBloodGroup(bloodGroup);
     }
 }

@@ -13,4 +13,7 @@ import java.util.List;
 public interface DonorRepository extends JpaRepository<Member,Integer> , PagingAndSortingRepository<Member,Integer> {
     @Query("select m from Member m where m.lastDonatedOn < :criteriaDate")
     List<Member> findEligibleUser(@Param("criteriaDate") LocalDate criteriaDate);
+
+    @Query(value = "select * from member m where m.bloodgroup = :bloodGroup",nativeQuery = true)
+    List<Member> findSpecificBloodGroup(@Param("bloodGroup") String bloodgroup);
 }

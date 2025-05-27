@@ -18,5 +18,8 @@ public interface DonorRepository extends JpaRepository<Member,Integer> , PagingA
     @Query(value = "select * from member m where m.bloodgroup = :bloodGroup",nativeQuery = true)
     List<Member> findSpecificBloodGroup(@Param("bloodGroup") String bloodgroup);
 
+    @Query("select m from Member m where m.name = :name")
+    Member findByUserName(@Param("name") String name);
+
 
 }

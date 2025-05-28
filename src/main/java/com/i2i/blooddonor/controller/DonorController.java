@@ -4,6 +4,7 @@ import com.i2i.blooddonor.model.Member;
 import com.i2i.blooddonor.model.MemberDetail;
 import com.i2i.blooddonor.requestModel.MemberDTO;
 import com.i2i.blooddonor.service.DonorService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class DonorController {
 
     @Value("${greetings.message}")
     private String greeting;
+
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeMessage(){
@@ -70,6 +72,7 @@ public class DonorController {
     public  ResponseEntity<List<Member>> findAllMember(){
       return new ResponseEntity<>(donorService.findAllMember(),HttpStatus.OK);
     }
+
 
     @DeleteMapping("/deleteMemberById")
     public ResponseEntity<String> deleteMemberById(@RequestParam Integer id){

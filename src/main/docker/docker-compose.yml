@@ -38,6 +38,25 @@ services:
     ports:
       - "8200:8200"
 
+  keycloak:
+    container_name: keycloak_blood_donor_app
+    image: quay.io/keycloak/keycloak:23.0.6
+    ports:
+      - 8090:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+      - --import-realm
+    volumes:
+      - ./keycloak:/tmp/keycloak
+
+
+
+
+
+
 volumes:
   mysql_data: {}
   staging_mysql_data: {}

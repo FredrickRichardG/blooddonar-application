@@ -8,6 +8,9 @@ import com.i2i.blooddonor.repository.DonorRepository;
 import com.i2i.blooddonor.requestModel.MemberDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +34,7 @@ public class DonorServiceImpl implements DonorService {
         this.donorMemberDetailRepository = donorMemberDetailRepository;
     }
 
+    @CachePut(value="MEMBER_CACHE",key = "#member.id")
     @Override
     public Member createMember(Member member, MemberDetail memberDetail) {
         member.setMemberdetail(memberDetail);
@@ -53,6 +57,7 @@ public class DonorServiceImpl implements DonorService {
         }
     }
 
+    @Cacheable(value="MEMBER_CACHE",key = "#id")
     public Member findByIdMember(Integer id){
 
         Optional<Member> memberOpData = donorRepository.findById(id);
@@ -67,10 +72,13 @@ public class DonorServiceImpl implements DonorService {
 
         return donorRepository.findAll();
     }
+
+    @CacheEvict(value="MEMBER_CACHE",key = "#id")
     public void deleteMemberId(Integer id){
          donorRepository.deleteById(id);
     }
 
+    @CachePut(value="MEMBER_CACHE",key = "#member.id")
     @Override
     public Member updateMember(Member member){
 

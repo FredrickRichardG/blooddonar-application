@@ -8,7 +8,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.SecurityFilterChain;
@@ -47,7 +49,19 @@ public class SecurityConfig {
         // oauth2.0
 
         http
+                .csrf(csrf->csrf.disable())
+                .headers(headers -> headers
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+                )
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/blooddonors/v3/api-docs/**",
+                                "/blooddonors/swagger-ui/**",
+                                "/blooddonors/swagger-ui.html"
+                        ).permitAll()
                         .requestMatchers("/blooddonors/findAllMemberDetail","/blooddonors/findSpecificBloodGroupMember","/blooddonors/eligibleMemberRegToBloodGroup","/blooddonors/findMemberByIdEntity","/blooddonors/eligibleMember","/blooddonors/findAllWithPaginator","/blooddonors/findAll","/blooddonors/findMemberById").permitAll() // Allow public APIs
                         .requestMatchers("/blooddonors/welcome", "/blooddonors/newMember","/blooddonors/updateLastDonatedIsToday","/blooddonors/patchMember","/blooddonors/deleteMemberById","/blooddonors/updateMember").hasRole("admin")
                         .anyRequest().authenticated()
@@ -86,6 +100,13 @@ public class SecurityConfig {
 //    public UserDetailsService userDetailsService(){
 //        UserDetails user = User.builder().username("").password().
 //
+//    }
+
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return web -> web.ignoring().requestMatchers(
+//                "/swagger-ui/**", "/v3/api-docs/**"
+//        );
 //    }
 
 }

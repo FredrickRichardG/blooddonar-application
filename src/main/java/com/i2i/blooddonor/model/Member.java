@@ -1,5 +1,6 @@
 package com.i2i.blooddonor.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class Member extends Auditable<String> {
 
     @OneToOne(mappedBy="member",cascade = CascadeType.ALL)
     @JsonManagedReference
+    @Schema(hidden = true)
     private MemberDetail memberdetail;
 
 

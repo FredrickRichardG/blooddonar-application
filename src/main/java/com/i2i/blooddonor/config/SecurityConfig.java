@@ -4,9 +4,11 @@ import org.springframework.core.convert.converter.Converter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.SecurityFilterChain;
@@ -46,8 +48,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/blooddonors/findAllMemberDetail","/blooddonors/updateLastDonatedIsToday","/blooddonors/findSpecificBloodGroupMember","/blooddonors/eligibleMemberRegToBloodGroup","/blooddonors/findMemberByIdEntity","/blooddonors/eligibleMember","/blooddonors/findAllWithPaginator","/blooddonors/findAll","/blooddonors/findMemberById").permitAll() // Allow public APIs
-                        .requestMatchers("/blooddonors/welcome", "/blooddonors/newMember","/blooddonors/patchMember","/blooddonors/deleteMemberById","/blooddonors/updateMember").hasRole("admin")
+                        .requestMatchers("/blooddonors/findAllMemberDetail","/blooddonors/findSpecificBloodGroupMember","/blooddonors/eligibleMemberRegToBloodGroup","/blooddonors/findMemberByIdEntity","/blooddonors/eligibleMember","/blooddonors/findAllWithPaginator","/blooddonors/findAll","/blooddonors/findMemberById").permitAll() // Allow public APIs
+                        .requestMatchers("/blooddonors/welcome", "/blooddonors/newMember","/blooddonors/updateLastDonatedIsToday","/blooddonors/patchMember","/blooddonors/deleteMemberById","/blooddonors/updateMember").hasRole("admin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())
